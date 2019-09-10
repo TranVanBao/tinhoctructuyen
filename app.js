@@ -68,7 +68,5 @@ app.use(controllers);
 
 const port = process.env.port || 3000 
 
+app.listen(port, console.log(`Server start on port ${port}!`))
 
-db.sync({}).then(() => {
-  app.listen(port, console.log(`Server start on port ${port}!`))
-});

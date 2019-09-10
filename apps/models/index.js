@@ -1,5 +1,5 @@
 var Sequelize = require('sequelize');
-
+var db = require("../../helpers/dbconnect");
 var khoahoc = require("./khoahoc.model")
 var dangky = require("./dangky.model")
  var taikhoan = require("./taikhoan.model")
@@ -73,4 +73,6 @@ khoahoc.hasOne(lophoc, {
 });
 
 
+
+db.sync({})
 module.exports = {taikhoan,khoahoc,dangky,diendan, giangvien,hocvien,khachhang,lophoc,phanhoi,phonghoc,thoikhoabieu }

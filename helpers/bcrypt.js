@@ -5,6 +5,7 @@ var {taikhoan,khoahoc,dangky,diendan, giangvien,hocvien,khachhang,lophoc,phanhoi
 class modelUser {
   async checkTK(tk, done){
 
+    //console.log(tk.tentaikhoan);
     
     let taik =await taikhoan.findOne ({ where: {'tentaikhoan': tk.tentaikhoan} });
         if (tk)

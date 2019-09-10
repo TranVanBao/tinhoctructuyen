@@ -15,16 +15,9 @@ app.use(passport.session());
 var {taikhoan,khoahoc,dangky,diendan, giangvien,hocvien,khachhang,lophoc,phanhoi,phonghoc,thoikhoabieu} = require("../../models/index")
 var Sequelize = require('sequelize');
 
-
-//var taikhoan = require("../../models/taikhoan.model")
-
 // session
 var router = express.Router();
-
-
 const user = [];
-
-
 
 router.get("/register",checkNotAuthenticated,function(req,res){
     // res.json({"message": "This is Home Page"})
@@ -32,15 +25,7 @@ router.get("/register",checkNotAuthenticated,function(req,res){
 });
 router.post("/register",checkNotAuthenticated, async function(req,res){
     try {
-        const hashedpassword =  await bcrypt.hash(req.body.password, 10);
-        // user.push({
-        //    // id: Date.now().toString(),
-        //     name: req.body.name,
-        //     quyen: 0,
-        //     trangthai: 1,
-        //     email:req.body.email,
-        //     password: hashedpassword
-        // })
+        const hashedpassword =  await bcrypt.hash(req.body.password, 10);      
          taikhoan.findOrCreate({
          where: {tentaikhoan: req.body.name
         }, 
@@ -66,7 +51,7 @@ router.post("/register",checkNotAuthenticated, async function(req,res){
 router.route('/admin')
 .get((req,res) => { 
     if(req.isAuthenticated()){
-        console.log(req.user);
+       // console.log(req.user);
         res.render('../views/admin/index.ejs', {name : req.user.tentaikhoan });
     }   
    else
@@ -78,6 +63,7 @@ router.get('/logout',(req,res) => {
     res.redirect('/login');
 })
 router.route('/login')
+
     .get((req, res) => {
         res.render('../views/admin/login.ejs');
     })
@@ -85,18 +71,11 @@ router.route('/login')
     .post(passport.authenticate('local', { failureRedirect: '/login', successRedirect: '/admin' }))
 let model =new modelUS();
 passport.use('local', new LocalStrategy(model.getAccount));
-passport.serializeUser((tk, done) => {
-    console.log(tk);
+passport.serializeUser((tk, done) => { 
     done(null, tk);
 });
 passport.deserializeUser(model.checkTK);
 
-
-
-// router.delete('/logout', (req, res) => {
-//     req.logOut()
-//     res.redirect('../outsite/login')
-//   })
   
   router.get('/logout', function(req, res) {
     req.logout();
